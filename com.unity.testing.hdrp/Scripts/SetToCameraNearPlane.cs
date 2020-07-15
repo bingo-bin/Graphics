@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SetToCameraNearPlane : MonoBehaviour
 {
-    new public MeshRenderer renderer;
-    new public Camera camera;
+    public MeshRenderer renderer2;
+    public Camera camera2;
     //public GraphicsTestSettings testSettings;
 
     [Range(0, 1)]
@@ -27,23 +27,23 @@ public class SetToCameraNearPlane : MonoBehaviour
 
         bool scaleBaseOnX = objectRatio >= captureRatio;
 
-        float camDistance = camera.nearClipPlane + nearPlaneOffset;
+        float camDistance = camera2.nearClipPlane + nearPlaneOffset;
 
         float nearPlaneTargetSize = 1f;
 
-        if (camera.orthographic)
+        if (camera2.orthographic)
         {
-            nearPlaneTargetSize = camera.orthographicSize * ((scaleBaseOnX) ? captureRatio : 1f) * screenSize;
+            nearPlaneTargetSize = camera2.orthographicSize * ((scaleBaseOnX) ? captureRatio : 1f) * screenSize;
         }
         else
         {
-            nearPlaneTargetSize = Mathf.Sin(camera.fieldOfView * 0.5f * Mathf.Deg2Rad * ((scaleBaseOnX) ? captureRatio : 1f)) * camDistance * screenSize;
+            nearPlaneTargetSize = Mathf.Sin(camera2.fieldOfView * 0.5f * Mathf.Deg2Rad * ((scaleBaseOnX) ? captureRatio : 1f)) * camDistance * screenSize;
         }
 
-        renderer.transform.parent = camera.transform;
-        renderer.transform.localPosition = new Vector3(0, 0, camDistance);
-        renderer.transform.localRotation = Quaternion.identity;
-        renderer.transform.localScale = Vector3.one * Mathf.Abs(nearPlaneTargetSize / ( (scaleBaseOnX) ? extend.x : extend.y ) );
+        renderer2.transform.parent = camera2.transform;
+        renderer2.transform.localPosition = new Vector3(0, 0, camDistance);
+        renderer2.transform.localRotation = Quaternion.identity;
+        renderer2.transform.localScale = Vector3.one * Mathf.Abs(nearPlaneTargetSize / ( (scaleBaseOnX) ? extend.x : extend.y ) );
 
     }
 
@@ -59,9 +59,9 @@ public class SetToCameraNearPlane : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (renderer == null) return;
+        if (renderer2 == null) return;
 
-        Gizmos.matrix = renderer.transform.localToWorldMatrix;
+        Gizmos.matrix = renderer2.transform.localToWorldMatrix;
         Gizmos.DrawWireCube(Vector3.zero, extend * 2f);
     }
 }
